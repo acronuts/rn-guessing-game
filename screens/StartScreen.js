@@ -3,15 +3,18 @@ import {
   View,
   StyleSheet,
   Text,
-  TextInput,
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 
 import Card from "../components/Card";
-import colors from "../constants/colors";
+import NumberContainer from "../components/NumberContainer";
 import Input from "./../components/Input";
+import BodyText from "./../components/BodyText";
+import colors from "../constants/colors";
+import MainButton from "../components/MainButton";
 
 const StartScreen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
@@ -29,18 +32,34 @@ const StartScreen = (props) => {
 
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enteredValue);
-    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        "Invalid number!",
+        "Number has to be a number between 1 and 99.",
+        [{ text: "OK", style: "destructive", onPress: resetInputHandler }]
+      );
       return;
     }
     setConfirmed(true);
     setSelectedNumber(chosenNumber);
     setEnteredValue("");
+    Keyboard.dismiss();
   };
 
   let confirmedOutput;
 
   if (confirmed) {
-    confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>;
+    confirmedOutput = (
+      <Card style={styles.outputContainer}>
+        <BodyText>You selected:</BodyText>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <MainButton
+          // color={colors.secondary}
+          onPress={() => props.onStartGame(selectedNumber)}>
+          Start Game
+        </MainButton>
+      </Card>
+    );
   }
 
   return (
@@ -51,7 +70,7 @@ const StartScreen = (props) => {
       <View style={styles.screen}>
         <Text style={styles.title}>Start Game</Text>
         <Card style={styles.inputContainer}>
-          <Text>Select a number</Text>
+          <BodyText>Select a number</BodyText>
           <Input
             style={styles.input}
             keyboardType="numeric"
@@ -104,14 +123,22 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    fontFamily: "open-sans-bold",
     marginVertical: 10,
   },
   button: {
     width: "40%",
   },
   input: {
-    width: 30,
+    height: 40,
+    width: 40,
     textAlign: "center",
+    borderRadius: 5,
+    fontSize: 20,
+  },
+  outputContainer: {
+    marginTop: 20,
+    alignItems: "center",
   },
 });
 
