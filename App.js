@@ -25,7 +25,9 @@ export default function App() {
     return (
       <AppLoading
         startAsync={fetchFonts}
-        onFinish={() => {setDataLoaded(true)}}
+        onFinish={() => {
+          setDataLoaded(true);
+        }}
         onError={(err) => console.log(err)}
       />
     );

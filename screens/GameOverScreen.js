@@ -18,12 +18,16 @@ const GameOverScreen = (props) => {
       <View style={styles.resultContainer}>
         <BodyText style={styles.resultText}>
           Your phone needed{" "}
-          <Text style={styles.highlight}>{props.guessNumber + 1}</Text> guesses to
-          find your number:{" "}
+          <Text style={styles.highlight}>{props.guessNumber}</Text> guesses
+          to find your number:{" "}
           <Text style={styles.highlight}>{props.userNumber}</Text>
         </BodyText>
       </View>
-      <Button title="Restart" onPress={props.onRestart} color={colors.secondary}/>
+      <Button
+        title="Restart"
+        onPress={props.onRestart}
+        color={colors.secondary}
+      />
     </View>
   );
 };
@@ -47,17 +51,17 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   resultContainer: {
-      marginHorizontal: 30,
-      marginBottom: 15,
+    marginHorizontal: 30,
+    marginBottom: 15,
   },
   highlight: {
     color: colors.primary,
-    fontFamily: 'open-sans-bold',
+    fontFamily: "open-sans-bold",
   },
   resultText: {
-      textAlign: 'center',
-      fontSize: 20,
-  }
+    textAlign: "center",
+    fontSize: 20,
+  },
 });
 
 export default GameOverScreen;
